@@ -1,0 +1,7 @@
+.movie-card:hover {
+  cursor: pointer;
+}
+
+.movie-card:hover .movie-title {
+  color: #f5c518;
+}

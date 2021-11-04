@@ -1,8 +1,14 @@
-import Col from "react-bootstrap/Col"
-import Image from "react-bootstrap/Image"
+import { useState } from "react"
 import { connect } from "react-redux"
+import MovieCard from "./MovieCard"
+import MovieDetail from "./MovieDetail"
 
 const MoviesList = ({ movies, text }) => {
+  const [showDetail, setShowDetail] = useState(false)
+
+  const handleClose = () => setShowDetail(false)
+  const handleShow = () => setShowDetail(true)
+
   return (
     movies.Response === "True" && (
       <>
@@ -10,12 +16,10 @@ const MoviesList = ({ movies, text }) => {
           Showing {movies.Search.length} results for "{text}"
         </div>
         {movies.Search.map((movie, index) => (
-          <Col xs={12} md={3} key={index}>
-            <Image src={movie.Poster} fluid />
-            <h4 className="mt-3">{movie.Title}</h4>
-            <p>{movie.Year}</p>
-          </Col>
+          <MovieCard key={index} movie={movie} handleShow={handleShow} />
         ))}
+
+        <MovieDetail showDetail={showDetail} handleClose={handleClose} />
       </>
     )
   )
