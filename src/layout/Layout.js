@@ -25,7 +25,6 @@ const Layout = ({ loading }) => {
         ) : (
           <MoviesList />
         )}
-        <MoviesList />
       </Row>
     </Container>
   )
