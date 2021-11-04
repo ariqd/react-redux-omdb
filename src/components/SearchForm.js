@@ -1,15 +1,20 @@
 import { connect } from "react-redux"
-import { searchMovie, fetchMovies } from "../redux/actions/searchActions"
+import {
+  searchMovie,
+  fetchMovies,
+  setLoading,
+} from "../redux/actions/searchActions"
 import Container from "react-bootstrap/Container"
 import Col from "react-bootstrap/Col"
 import Form from "react-bootstrap/Form"
 import Row from "react-bootstrap/Row"
 import Button from "react-bootstrap/Button"
 
-const SearchForm = ({ text, searchMovie, fetchMovies }) => {
+const SearchForm = ({ text, searchMovie, fetchMovies, setLoading }) => {
   const submit = (e) => {
     e.preventDefault()
     fetchMovies(text)
+    setLoading()
   }
 
   return (
@@ -49,6 +54,8 @@ const mapStateToProps = (state) => ({
   text: state.movies.text,
 })
 
-export default connect(mapStateToProps, { searchMovie, fetchMovies })(
-  SearchForm
-)
+export default connect(mapStateToProps, {
+  searchMovie,
+  fetchMovies,
+  setLoading,
+})(SearchForm)
