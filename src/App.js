@@ -1,18 +1,12 @@
-import Container from "react-bootstrap/Container"
-import Row from "react-bootstrap/Row"
-import Header from "./components/Header"
-import SearchForm from "./components/SearchForm"
+import { Provider } from "react-redux"
+import Layout from "./layout/Layout"
+import store from "./redux/store"
 
 function App() {
   return (
-    <Container>
-      <Row>
-        <Header />
-      </Row>
-      <Row>
-        <SearchForm />
-      </Row>
-    </Container>
+    <Provider store={store}>
+      <Layout />
+    </Provider>
   )
 }
 
