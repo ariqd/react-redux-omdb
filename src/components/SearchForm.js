@@ -1,18 +1,25 @@
+import { connect } from "react-redux"
+import { searchMovie, fetchMovies } from "../redux/actions/searchActions"
 import Container from "react-bootstrap/Container"
 import Col from "react-bootstrap/Col"
 import Form from "react-bootstrap/Form"
 import Row from "react-bootstrap/Row"
 import Button from "react-bootstrap/Button"
 
-const SearchForm = () => {
+const SearchForm = ({ text, searchMovie, fetchMovies }) => {
+  const submit = (e) => {
+    e.preventDefault()
+    fetchMovies(text)
+  }
+
   return (
-    <div class="p-5 mb-4 bg-dark text-light rounded-3">
+    <div className="p-3 mb-4 bg-dark text-light rounded-3">
       <Container fluid className="py-5">
-        <h1 class="display-5 fw-bold">Welcome to The Movie Search</h1>
+        <h1 className="display-5 fw-bold">Welcome to The Movie Search</h1>
         <Col md="8" className="fs-4">
           Find your favorite Movies or Series here
         </Col>
-        <Form>
+        <Form onSubmit={(e) => submit(e)}>
           <Row className="align-items-center mt-4">
             <Col xs={12} md={9}>
               <Form.Label htmlFor="inlineFormInput" visuallyHidden>
@@ -23,6 +30,7 @@ const SearchForm = () => {
                 id="inlineFormInput"
                 placeholder="Search Movies or TV Series..."
                 autoFocus
+                onChange={(e) => searchMovie(e.target.value)}
               />
             </Col>
             <Col xs={12} md={3} className="d-grid gap-2">
@@ -37,4 +45,10 @@ const SearchForm = () => {
   )
 }
 
-export default SearchForm
+const mapStateToProps = (state) => ({
+  text: state.movies.text,
+})
+
+export default connect(mapStateToProps, { searchMovie, fetchMovies })(
+  SearchForm
+)
