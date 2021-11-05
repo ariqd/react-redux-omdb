@@ -9,6 +9,7 @@ import Col from "react-bootstrap/Col"
 import Form from "react-bootstrap/Form"
 import Row from "react-bootstrap/Row"
 import Button from "react-bootstrap/Button"
+import AutoComplete from "./Autocomplete"
 
 const SearchForm = ({ text, searchMovie, fetchMovies, setLoading }) => {
   const submit = (e) => {
@@ -30,12 +31,28 @@ const SearchForm = ({ text, searchMovie, fetchMovies, setLoading }) => {
               <Form.Label htmlFor="inlineFormInput" visuallyHidden>
                 Name
               </Form.Label>
-              <Form.Control
-                className="mb-2"
-                id="inlineFormInput"
-                placeholder="Search Movies or TV Series..."
+              {/* <Form.Control
+                // className="mb-2"
+                // placeholder="Search Movies or TV Series..."
                 autoFocus
                 onChange={(e) => searchMovie(e.target.value)}
+              /> */}
+              <AutoComplete
+                className="mb-2"
+                placeholder="Search Movies or TV Series..."
+                searchMovie={searchMovie}
+                suggestions={[
+                  "Avengers Endgame",
+                  "Avengers Age of Ultron",
+                  "Crocodilian",
+                  "Death Roll",
+                  "Eggs",
+                  "Jaws",
+                  "Reptile",
+                  "Solitary",
+                  "Tail",
+                  "Wetlands",
+                ]}
               />
             </Col>
             <Col xs={12} md={3} className="d-grid gap-2">
