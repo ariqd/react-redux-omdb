@@ -4,11 +4,13 @@ import {
   LOADING,
   FETCH_MOVIE,
   LOADING_MOVIE,
+  APPEND_MOVIES,
 } from "../actions/types"
 
 const initialState = {
   text: "",
   movies: [],
+  hasMore: false,
   loading: false,
   movie: [],
   loadingMovie: false,
@@ -26,12 +28,13 @@ const searchReducer = (state = initialState, action) => {
       return {
         ...state,
         movies: action.payload,
+        hasMore: action.payload.Response === "True",
         loading: false,
       }
     case LOADING:
       return {
         ...state,
-        movies: [],
+        // movies: [],
         loading: true,
       }
     case FETCH_MOVIE:
@@ -45,6 +48,16 @@ const searchReducer = (state = initialState, action) => {
         ...state,
         movie: [],
         loadingMovie: true,
+      }
+    case APPEND_MOVIES:
+      const changeHasMore = action.payload.Response === "True"
+      if (changeHasMore) {
+        state.movies.Search.push(...action.payload.Search)
+      }
+      return {
+        ...state,
+        hasMore: changeHasMore,
+        loading: false,
       }
     default:
       return state

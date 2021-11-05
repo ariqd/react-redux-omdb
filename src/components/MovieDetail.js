@@ -43,7 +43,7 @@ const MovieDetail = ({ showDetail, handleClose, movie, loadingMovie }) => {
                 </p>
 
                 <Row className="my-4">
-                  {movie.Ratings.map((rating, index) => (
+                  {movie.Ratings?.map((rating, index) => (
                     <Col className="text-center" key={index}>
                       <h4>{rating.Value}</h4>
                       <p className="text-secondary">{rating.Source}</p>

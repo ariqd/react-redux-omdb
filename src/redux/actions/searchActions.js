@@ -4,6 +4,7 @@ import {
   LOADING,
   FETCH_MOVIE,
   LOADING_MOVIE,
+  APPEND_MOVIES,
 } from "./types"
 import axios from "axios"
 
@@ -16,17 +17,21 @@ export const searchMovie = (text) => (dispatch) => {
   })
 }
 
-export const fetchMovies = (text) => (dispatch) => {
-  axios
-    .get(`https://www.omdbapi.com/?apikey=${key}&s=${text}`)
-    .then((response) =>
-      dispatch({
-        type: FETCH_MOVIES,
-        payload: response.data,
-      })
-    )
-    .catch((err) => console.log(err))
-}
+export const fetchMovies =
+  (text, pageNumber = 1) =>
+  (dispatch) => {
+    axios
+      .get(
+        `https://www.omdbapi.com/?apikey=${key}&s=${text}&page=${pageNumber}`
+      )
+      .then((response) =>
+        dispatch({
+          type: pageNumber === 1 ? FETCH_MOVIES : APPEND_MOVIES,
+          payload: response.data,
+        })
+      )
+      .catch((err) => console.log(err))
+  }
 
 export const setLoading = () => {
   return {
