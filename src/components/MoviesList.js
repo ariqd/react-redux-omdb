@@ -2,12 +2,19 @@ import { useState } from "react"
 import { connect } from "react-redux"
 import MovieCard from "./MovieCard"
 import MovieDetail from "./MovieDetail"
+import { fetchMovie, setLoadingMovie } from "../redux/actions/searchActions"
 
-const MoviesList = ({ movies, text }) => {
+const MoviesList = ({ movies, text, fetchMovie, setLoadingMovie }) => {
   const [showDetail, setShowDetail] = useState(false)
 
+  const handleShow = (id) => {
+    console.log(id)
+    setShowDetail(true)
+    setLoadingMovie()
+    fetchMovie(id)
+  }
+
   const handleClose = () => setShowDetail(false)
-  const handleShow = () => setShowDetail(true)
 
   return (
     movies.Response === "True" && (
@@ -30,4 +37,6 @@ const mapStateToProps = (state) => ({
   text: state.movies.text,
 })
 
-export default connect(mapStateToProps)(MoviesList)
+export default connect(mapStateToProps, { fetchMovie, setLoadingMovie })(
+  MoviesList
+)
