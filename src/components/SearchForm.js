@@ -11,7 +11,13 @@ import Row from "react-bootstrap/Row"
 import Button from "react-bootstrap/Button"
 import AutoComplete from "./Autocomplete"
 
-const SearchForm = ({ text, searchMovie, fetchMovies, setLoading }) => {
+const SearchForm = ({
+  text,
+  searchMovie,
+  fetchMovies,
+  setLoading,
+  moviesSuggestions,
+}) => {
   const submit = (e) => {
     e.preventDefault()
     fetchMovies(text)
@@ -41,19 +47,9 @@ const SearchForm = ({ text, searchMovie, fetchMovies, setLoading }) => {
                 className="mb-2"
                 placeholder="Search Movies or TV Series..."
                 searchMovie={searchMovie}
-                suggestions={[
-                  "Avengers Endgame",
-                  "Avengers Age of Ultron",
-                  "Crocodilian",
-                  "Death Roll",
-                  "Eggs",
-                  "Jaws",
-                  "Reptile",
-                  "Solitary",
-                  "Tail",
-                  "Wetlands",
-                ]}
+                suggestions={moviesSuggestions}
               />
+              {/* {moviesSuggestions} */}
             </Col>
             <Col xs={12} md={3} className="d-grid gap-2">
               <Button type="submit" className="mb-2 btn-warning">
@@ -69,6 +65,7 @@ const SearchForm = ({ text, searchMovie, fetchMovies, setLoading }) => {
 
 const mapStateToProps = (state) => ({
   text: state.movies.text,
+  moviesSuggestions: state.movies.moviesSuggestions,
 })
 
 export default connect(mapStateToProps, {

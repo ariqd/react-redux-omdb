@@ -5,6 +5,7 @@ import {
   FETCH_MOVIE,
   LOADING_MOVIE,
   APPEND_MOVIES,
+  FETCH_MOVIES_SUGGESTIONS,
 } from "./types"
 import axios from "axios"
 
@@ -55,4 +56,16 @@ export const setLoadingMovie = () => {
   return {
     type: LOADING_MOVIE,
   }
+}
+
+export const fetchMoviesSuggestions = (text) => (dispatch) => {
+  axios
+    .get(`https://www.omdbapi.com/?apikey=${key}&s=${text}`)
+    .then((response) =>
+      dispatch({
+        type: FETCH_MOVIES_SUGGESTIONS,
+        payload: response.data,
+      })
+    )
+    .catch((err) => console.log(err))
 }

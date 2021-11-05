@@ -1,7 +1,14 @@
 import React, { useState } from "react"
 import { Form } from "react-bootstrap"
+import { connect } from "react-redux"
+import { fetchMoviesSuggestions } from "../redux/actions/searchActions"
 
-const AutoComplete = ({ suggestions, searchMovie, ...props }) => {
+const AutoComplete = ({
+  suggestions,
+  fetchMoviesSuggestions,
+  searchMovie,
+  ...props
+}) => {
   const [filteredSuggestions, setFilteredSuggestions] = useState([])
   const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(0)
   const [showSuggestions, setShowSuggestions] = useState(false)
@@ -10,19 +17,20 @@ const AutoComplete = ({ suggestions, searchMovie, ...props }) => {
 
   React.useEffect(() => {
     searchMovie(input)
+    fetchMoviesSuggestions(input)
   }, [input])
 
   const onChange = (e) => {
-    const userInput = e.target.value
+    // const userInput = e.target.value
 
     // Filter our suggestions that don't contain the user's input
-    const unLinked = suggestions.filter(
-      (suggestion) =>
-        suggestion.toLowerCase().indexOf(userInput.toLowerCase()) > -1
-    )
+    // const unLinked = suggestions.filter(
+    //   (suggestion) =>
+    //     suggestion.toLowerCase().indexOf(userInput.toLowerCase()) > -1
+    // )
 
     setInput(e.target.value)
-    setFilteredSuggestions(unLinked)
+    setFilteredSuggestions(suggestions)
     setActiveSuggestionIndex(0)
     setShowSuggestions(true)
 
@@ -61,9 +69,9 @@ const AutoComplete = ({ suggestions, searchMovie, ...props }) => {
   }
 
   const SuggestionsList = () => {
-    return filteredSuggestions.length ? (
+    return suggestions.length ? (
       <ul className="suggestions">
-        {filteredSuggestions.map((suggestion, index) => {
+        {suggestions.map((suggestion, index) => {
           let className
           if (index + 1 === activeSuggestionIndex) {
             className = "suggestion-active"
@@ -91,8 +99,8 @@ const AutoComplete = ({ suggestions, searchMovie, ...props }) => {
         value={input}
         {...props}
       />
-      {showSuggestions && input && <SuggestionsList />}
+      {showSuggestions && input.length > 3 && <SuggestionsList />}
     </>
   )
 }
-export default AutoComplete
+export default connect(null, { fetchMoviesSuggestions })(AutoComplete)

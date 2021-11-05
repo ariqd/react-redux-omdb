@@ -5,6 +5,7 @@ import {
   FETCH_MOVIE,
   LOADING_MOVIE,
   APPEND_MOVIES,
+  FETCH_MOVIES_SUGGESTIONS,
 } from "../actions/types"
 
 const initialState = {
@@ -14,6 +15,7 @@ const initialState = {
   loading: false,
   movie: [],
   loadingMovie: false,
+  moviesSuggestions: [],
 }
 
 const searchReducer = (state = initialState, action) => {
@@ -59,6 +61,13 @@ const searchReducer = (state = initialState, action) => {
         ...state,
         hasMore: changeHasMore,
         loading: false,
+      }
+    case FETCH_MOVIES_SUGGESTIONS:
+      // const titles = action?.payload?.Search?.map((movie) => movie.Title)
+      // console.log(titles.length)
+      return {
+        ...state,
+        moviesSuggestions: action?.payload?.Search?.map((movie) => movie.Title),
       }
     default:
       return state
