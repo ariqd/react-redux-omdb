@@ -8,7 +8,6 @@ const MoviesList = ({ movies, text, fetchMovie, setLoadingMovie }) => {
   const [showDetail, setShowDetail] = useState(false)
 
   const handleShow = (id) => {
-    console.log(id)
     setShowDetail(true)
     setLoadingMovie()
     fetchMovie(id)
